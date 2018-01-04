@@ -8,7 +8,9 @@ const session = require('express-session');
 const passport = require('passport');
 const config = require('./config/database');
 const User = require('./models/users');
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+
+const port = process.env.PORT || 8080;
 
 //Google Oauth stuff
 const CLIENT_ID = "914555437419-p2jsddh6kg65t7mcphti5nh413q5ai35.apps.googleusercontent.com";
@@ -147,8 +149,8 @@ app.get('/auth/google/callback',
 
 
 //Start server
-app.listen(80, function(){
-  console.log('Server started on port 3000...');
+app.listen(port, function(){
+  console.log('Server started on port ' + port + "...");
 });
 
 //Home Route
