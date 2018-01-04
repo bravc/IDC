@@ -99,9 +99,10 @@ passport.use(new GoogleStrategy({
 		}
 		//If no user exists
 		if(!user){
+			console.log(profile);
 			user = new User({
 				name: profile.displayName,
-				email: profile.emails[0].value
+				email: profile.email
 			});
 			user.save(function(err){
 				if (err) console.log(err);
@@ -116,7 +117,7 @@ passport.use(new GoogleStrategy({
 ));
 
 app.get('/auth/google',
-  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
+  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile'] }));
 
 app.get('/auth/google/callback', 
   passport.authenticate('google', { failureRedirect: '/login' }),
