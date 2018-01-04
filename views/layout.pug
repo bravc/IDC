@@ -2,8 +2,14 @@ doctype html
 html
   head
     title Knowledgebase
-    link(rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.css')
-    link(rel='stylesheet' href='/css/style.css')
+    // Latest compiled and minified CSS
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u', crossorigin='anonymous')
+    // Optional theme
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css', integrity='sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp', crossorigin='anonymous')
+
+    // Latest compiled and minified JavaScript
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js', integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa', crossorigin='anonymous')
+
   body
     nav.navbar.navbar-inverse
       .container
@@ -13,14 +19,11 @@ html
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a.navbar-brand(href='/') KnowledgeBase
+          a.navbar-brand(href='/') IC
         #navbar.collapse.navbar-collapse
           ul.nav.navbar-nav
             li
               a(href='/') Home
-            if user
-              li
-                a(href='/articles/add') Add Article
           ul.nav.navbar-nav.navbar-right
             if user
               li 
@@ -35,7 +38,7 @@ html
       br
       hr
       footer
-        p Copyright &copy; 2017
+        p Copyright &copy; Cameron Braverman 2017
     script(src='/bower_components/jquery/dist/jquery.js')  
     script(src='/bower_components/bootstrap/dist/js/bootstrap.js')
     script(src='/js/main.js')  
