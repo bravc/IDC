@@ -51,12 +51,7 @@ app.use(bodyParser.json());
 // Set Public Folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Express Session Middleware
-app.use(session({
-  secret: 'keyboard cat',
-  resave: true,
-  saveUninitialized: true
-}));
+
 
 // Express Messages Middleware
 app.use(require('connect-flash')());
@@ -83,6 +78,27 @@ app.use(expressValidator({
   }
 }));
 
+// Express Session Middleware
+app.use(session({
+  secret: 'keyboard cat',
+  resave: true,
+  saveUninitialized: true
+}));
+
+
+//Initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+//Serialize user data
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+
 
 //GoogleStrategy
 passport.use(new GoogleStrategy({
@@ -102,7 +118,7 @@ passport.use(new GoogleStrategy({
 			console.log(profile);
 			user = new User({
 				name: profile.displayName,
-				email: profile.email
+				profile: profile._json
 			});
 			user.save(function(err){
 				if (err) console.log(err);
@@ -120,7 +136,11 @@ app.get('/auth/google',
   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile'] }));
 
 app.get('/auth/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/login' }),
+  passport.authenticate('google', { 
+  	failureRedirect: '/login' ,
+  	successRedirect: '/',
+  	failureFlash: true
+  }),
   function(req, res) {
     res.redirect('/');
   });
@@ -135,8 +155,6 @@ app.listen(3000, function(){
 app.get('/', function(req, res){
 	res.render('layout');
 });
-
-
 
 
 //Allow routing though routes folder
