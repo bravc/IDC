@@ -7,4 +7,4 @@ const UserSchema = Schema({
   profile: {type: JSON, required: true},
 });
 
-module.exports = mongoose.model('User', UserSchema);
+const User = module.exports = mongoose.model('User', UserSchema);
