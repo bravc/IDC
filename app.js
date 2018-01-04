@@ -6,7 +6,32 @@ const expressValidator = require('express-validator');
 const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
+const config = require('./config/database');
+const User = require('./models/users');
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
+//Google Oauth stuff
+const CLIENT_ID = "914555437419-p2jsddh6kg65t7mcphti5nh413q5ai35.apps.googleusercontent.com";
+const CLIENT_SECRET = "zSbKNxh9kvqpvFcdvzm9SRCv";
+
+
+
+//Initialize database
+mongoose.connect(config.database);
+let db = mongoose.connection;
+
+// Check connection
+db.once('open', function(){
+  console.log('Connected to MongoDB');
+});
+
+// Check for DB errors
+db.on('error', function(err){
+  console.log(err);
+});
+
+
+//Create app
 const app = express();
 
 
@@ -59,15 +84,58 @@ app.use(expressValidator({
 }));
 
 
+//GoogleStrategy
+passport.use(new GoogleStrategy({
+    clientID: CLIENT_ID,
+    clientSecret: CLIENT_SECRET,
+    callbackURL: "/auth/google/callback"
+  },
+  function(accessToken, refreshToken, profile, done) {
+    	User.findOne({ googleId: profile.id }, function (err, user) {
+
+    	//if error
+		if(err){
+			return done(err, user);
+		}
+		//If no user exists
+		if(!user){
+			user = new User({
+				name: profile.displayName,
+				email: profile.emails[0].value
+			});
+			user.save(function(err){
+				if (err) console.log(err);
+				return done(err, user);
+			});
+		//If user exists just continue
+		} else{
+				return done(err, done);
+		}
+    });
+  }
+));
+
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
+
+app.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/');
+  });
+
 
 //Start server
 app.listen(3000, function(){
   console.log('Server started on port 3000...');
 });
 
+//Home Route
 app.get('/', function(req, res){
 	res.render('layout');
 });
+
+
 
 
 //Allow routing though routes folder
@@ -76,4 +144,3 @@ app.use('/users', users);
 
 
 
-module.exports = app;
