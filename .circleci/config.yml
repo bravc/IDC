@@ -26,26 +26,12 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: npm install -g mocha
+      - run: npm install npm start
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-
-     - run:
-	name: tests
-	command: npm test
-
-     - deploy:
-	master:
-		branch: master
-		commands:
-			- echo 'deploying'
-			- ssh cam@104.131.77.134 
-			- "cd ~/IDC; git pull; npm install; pm2 start app"      
-
-
-  
-
-
+        
+      # run tests!
+      - run: npm test
