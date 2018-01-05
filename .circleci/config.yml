@@ -13,4 +13,4 @@ jobs:
                 command: npm test
             - deploy:
                 name: digital-ocean
-                command: ssh -o "StrictHostKeyChecking no" cam@104.131.77.134 "cd ~/IDC; git pull; npm install; pm2 start app.js"
+                command: ssh -o "StrictHostKeyChecking no" cam@104.131.77.134 "cd ~/IDC; git pull; npm install; pm2 restart app.js"
