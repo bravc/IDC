@@ -52,6 +52,11 @@ app.use(bodyParser.json());
 // Set Public Folder
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(express.static(path.join(__dirname, 'public/images')));
+
+app.use('/public', express.static(path.join(__dirname, 'public')) );
+
+
 
 
 // Express Messages Middleware
