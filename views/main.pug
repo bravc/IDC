@@ -6,6 +6,6 @@ block content
 		ul.list-group
 			each user, i in users
 				li.list-group-item
-					a(href="/users/"+ user._id)=user.name
+					a(href="/users/profile/"+ user._id)=user.name
 	else
 		p1 No users online!
