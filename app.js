@@ -152,6 +152,7 @@ app.get('/auth/google/callback',
 		failureFlash: true
 	}),
 	function(req, res) {
+		req.flash('success', 'You have successfully logged in');
 		res.redirect('/');
 	});
 
