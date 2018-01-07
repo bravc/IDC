@@ -12,14 +12,13 @@ router.get('/login', function(req, res) {
 
 //Render local login system
 router.post('/login', function(req, res) {
-
 });
 
 
 //Handle logout functionality
 router.get('/logout', function(req, res){
 	req.logout();
-	req.flash('sucess', 'You are logged out');
+	req.flash('success', 'You have successfully logged out');
 	res.redirect('/');
 });
 

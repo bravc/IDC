@@ -45,7 +45,6 @@ app.set('view engine', 'pug');
 
 
 // Body Parser Middleware
-// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
@@ -61,6 +60,8 @@ app.use(function (req, res, next) {
 	res.locals.messages = require('express-messages')(req, res);
 	next();
 });
+
+
 
 // Express Validator Middleware
 app.use(expressValidator({
@@ -108,6 +109,7 @@ passport.deserializeUser(function(id, done) {
 	});
 });
 
+app.use(flash());
 
 //GoogleStrategy
 passport.use(new GoogleStrategy({
