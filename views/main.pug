@@ -6,7 +6,7 @@ block content
 		ul.list-group
 			each user, i in users
 				li.list-group-item
-					img.img-circle(src=user.profilePic, height='40px', width='40px')
+					img.img-circle(src=user.profilePic, height='40px', width='40px' style='border: 3px; padding: 2px')
 					a(href="/users/profile/"+ user._id)=user.name
 
 	else
