@@ -131,7 +131,8 @@ passport.use(new GoogleStrategy({
 		if(!user){
 			user = new User({
 				name: profile.displayName,
-				profile: profile._json
+				profile: profile._json,
+				profilePic: '/public/images/default-profile.png'
 			});
 			user.save(function(err){
 				if (err) console.log(err);
