@@ -42,7 +42,7 @@ html
                     style="margin: 10px 10px" data-toggle='dropdown', 
                     aria-haspopup='true',aria-expanded='true')=user.name + "  "
                       if user.profilePic
-                        img(src=user.profilePic, height='15px', width='15px')
+                        img.img-circle(src=user.profilePic, height='15px', width='15px')
                       else
                         i.fa.fa-user-circle(aria-hidden='true')
                   ul.dropdown-menu
