@@ -1,13 +1,68 @@
 extends layout
 
 block content 
-	h1 Registered Users
-	if !users.empty
-		ul.list-group
-			each user, i in users
-				li.list-group-item
-					img.img-circle(src=user.profilePic, height='40px', width='40px' style='border: 3px; padding: 2px')
-					a(href="/users/profile/"+ user._id, style='font-weight: bold; padding: 4px')=user.name
 
-	else
-		p4 No users registered!
+
+
+
+
+	.container
+		.row
+			h3 New Post
+		.row
+			.col-md-6
+				.widget-area.no-padding.blank
+					.status-upload
+						form
+							textarea(placeholder='What are you doing right now?')
+							ul
+								li
+									a(title='', data-toggle='tooltip', data-placement='bottom', data-original-title='Audio')
+										i.fa.fa-music
+								li
+									a(title='', data-toggle='tooltip', data-placement='bottom', data-original-title='Video')
+										i.fa.fa-video-camera
+								li
+									a(title='', data-toggle='tooltip', data-placement='bottom', data-original-title='Sound Record')
+										i.fa.fa-microphone
+								li
+									a(title='', data-toggle='tooltip', data-placement='bottom', data-original-title='Picture')
+										i.fa.fa-picture-o
+							button.btn.btn-success.green(type='submit')
+								i.fa.fa-share
+								|  Submit
+					// Status Upload
+				// Widget Area
+
+
+
+
+
+
+
+//- if !users.empty
+//- 	each user, i in users
+
+//- 		.container
+//- 			.row
+//- 				.col-sm-12
+//- 					h3 Recent Posts
+//- 				// /col-sm-12
+//- 			// /row
+//- 			.row
+//- 				.col-sm-1
+//- 					.thumbnail
+//- 						img.img-responsive.user-photo(src='https://ssl.gstatic.com/accounts/ui/avatar_2x.png')
+//- 					// /thumbnail
+//- 				// /col-sm-1
+//- 				.col-sm-5
+//- 					.panel.panel-default
+//- 						.panel-heading
+//- 							strong user.
+//- 							span.text-muted commented 5 days ago
+//- 						.panel-body
+//- 							| Panel content
+//- 						// /panel-body
+//- 					// /panel panel-default
+//- 				// /col-sm-5		
+

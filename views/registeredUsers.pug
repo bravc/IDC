@@ -1,0 +1,15 @@
+extends layout
+
+
+block content 
+
+	h1 Registered Users
+	if !users.empty
+		ul.list-group
+			each user, i in users
+				li.list-group-item
+					img.img-circle(src=user.profilePic, height='40px', width='40px' style='border: 3px; padding: 2px')
+					a(href="/users/profile/"+ user._id, style='font-weight: bold; padding: 4px')=user.name
+
+	else
+		p4 No users registered!

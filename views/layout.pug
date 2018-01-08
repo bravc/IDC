@@ -37,6 +37,8 @@ html
           ul.nav.navbar-nav.navbar-right
             if user
               li
+                  a(href='/users/registered') View Users
+              li
                 .dropdown
                   button.btn.dropdown-toggle(role='button', 
                     style="margin: 10px 10px" data-toggle='dropdown', 
@@ -49,7 +51,8 @@ html
                     li
                       a(href="/users/profile/" + user.id) View Profile
                     li
-                      a(href="users/logout") Logout
+                      a(href="/users/logout") Logout
+
 
             else
               li

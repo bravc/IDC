@@ -90,6 +90,10 @@ router.post('/upload/:id', type, ensureAuthenticated, function(req, res, next){
 });
 
 
+//Handle view users request
+
+
+
 
 // Access Control
 function ensureAuthenticated(req, res, next){
