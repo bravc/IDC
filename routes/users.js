@@ -91,7 +91,15 @@ router.post('/upload/:id', type, ensureAuthenticated, function(req, res, next){
 
 
 //Handle view users request
-
+router.get('/registered', function(req, res, next){
+		Users.find({}, function(err, users) {
+		var userMap = {};
+		users.forEach(function(user) {
+			userMap[user._id] = user;
+		});
+			res.render('registeredUsers', {users: userMap});
+	});
+});
 
 
 
