@@ -22,6 +22,30 @@ block content
 			input.btn.btn-primary(type='submit' value='Submit')
 
 
+	br
+	br
+
+
+	each post in user.posts
+		.container
+			.row
+				.col-sm-1
+					.thumbnail
+						img.img-responsive.user-photo(src=user.profilePic)
+					// /thumbnail
+				// /col-sm-1
+				.col-sm-5
+					.panel.panel-default
+						.panel-heading
+							strong=user.name
+							span.text-muted=post.date
+						.panel-body=post.content
+						// /panel-body
+					// /panel panel-default
+				// /col-sm-5		
+
+
+
 
 
 

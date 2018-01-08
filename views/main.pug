@@ -35,34 +35,29 @@ block content
 				// Widget Area
 
 
+	br
 
 
 
 
 
-if !users.empty
-	each user, i in users
-		each post in user.posts
-			.container
-				.row
-					.col-sm-12
-						h3 Recent Posts
-					// /col-sm-12
-				// /row
-				.row
-					.col-sm-1
-						.thumbnail
-							img.img-responsive.user-photo(src='https://ssl.gstatic.com/accounts/ui/avatar_2x.png')
-						// /thumbnail
-					// /col-sm-1
-					.col-sm-5
-						.panel.panel-default
-							.panel-heading
-								strong user.
-								span.text-muted commented 5 days ago
-							.panel-body
-								| Panel content
-							// /panel-body
-						// /panel panel-default
-					// /col-sm-5		
+	if !users.empty
+		each user, i in users
+			each post in user.posts
+				.container
+					.row
+						.col-sm-1
+							.thumbnail
+								img.img-responsive.user-photo(src=user.profilePic)
+							// /thumbnail
+						// /col-sm-1
+						.col-sm-5
+							.panel.panel-default
+								.panel-heading
+									strong=user.name
+									span.text-muted=post.date
+								.panel-body=post.content
+								// /panel-body
+							// /panel panel-default
+						// /col-sm-5		
 

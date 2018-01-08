@@ -5,8 +5,12 @@ let Users = require('../models/users');
 
 let Post = require('../models/post');
 
+let date = new Date();
+
 router.post('/new', ensureAuthenticated, function(req, res){
 	req.checkBody('body', 'Body is required').notEmpty();
+
+	console.log(req.body.body + "This is the body")
 
 	let errors = req.validationErrors();
 
@@ -18,6 +22,7 @@ router.post('/new', ensureAuthenticated, function(req, res){
 		let post = new Post();
 		post.name = req.user.name;
 		post.content = req.body.body;
+		post.date = date.toDateString();
 
 		post.save(function(err){
 			if(err){
