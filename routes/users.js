@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const multer = require('multer');
 const upload = multer({dest: '../uploads'})
-const cloudinary = require('cloudinary');
+const cloudinary = require('cloudinary').v2;
 
 //Cloudinary config
 const CLOUD_NAME = 'dkoaky7gl';
@@ -61,16 +61,15 @@ router.post('/upload/:id', type, ensureAuthenticated, function(req, res, next){
 	let query = {_id:req.params.id}
 
 	Users.findById(req.params.id, function(err, user){
-		console.log("Requesting user " + req.user.id + "vs Profile " + req.params.id);
 		if (user && (req.user.id === req.params.id)) {
-			cloudinary.v2.uploader.upload(tempPath, {public_id: user.id + '/profilePic'}, function(err, result){
+			cloudinary.uploader.upload(tempPath, {public_id: user.id + '/profilePic', allowed_formats: ['png', 'jpg']}, function(err, result){
 				if(err){
 					console.log(err);
-					req.flash('danger', 'Image upload error')
-					return;
+					req.flash('danger', 'Image upload error: ' + err.message)
+					res.redirect('/users/profile/' + req.params.id)
+
 				}else{
 					//find user and save profile pic
-					console.log(result);
 					user.profilePic = result.url;
 					user.save(function(err){
 						if(err){
