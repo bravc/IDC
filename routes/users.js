@@ -55,22 +55,30 @@ router.get('/profile/:id', ensureAuthenticated, function(req, res){
 //Handle User image submission
 const type = upload.single('avatar');
 
-router.post('/upload:id', type, ensureAuthenticated, function(req, res, next){
+router.post('/upload/:id', type, ensureAuthenticated, function(req, res, next){
 	const tempPath = req.file.path;
 
 	let query = {_id:req.params.id}
 
 	Users.findById(req.params.id, function(err, user){
 		if (user){
-			cloudinary.v2.uploader.upload(tempPath, {public_id: user.profile.id}, function(err, result){
+			cloudinary.v2.uploader.upload(tempPath, {public_id: 'user.id/profilePic'}, function(err, result){
 				if(err){
 					console.log(err);
 					return;
 				}else{
 					//find user and save profile pic
+					console.log(result);
 					user.profilePic = result.url;
-					req.flash('success', 'Image successfully uploaded')
-					next();
+					user.save(function(err){
+						if(err){
+							console.log(err);
+							return;
+						}else{
+							req.flash('success', 'Image successfully uploaded')
+							res.redirect('/users/profile/' + user.id)
+						}
+					});
 				}
 			});
 		}
