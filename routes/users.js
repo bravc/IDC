@@ -1,5 +1,21 @@
 const express = require('express');
 const router = express.Router();
+const path = require('path');
+const fs = require('fs');
+const multer = require('multer');
+const upload = multer({dest: '../uploads'})
+const cloudinary = require('cloudinary');
+
+//Cloudinary config
+const CLOUD_NAME = 'dkoaky7gl';
+const API_KEY = 398486879149374;
+const API_SECRET = '-Rp3hPd5uOoevk5Pd7UT5f77dIw';
+cloudinary.config({
+	cloud_name: CLOUD_NAME,
+	api_key: API_KEY,
+	api_secret: API_SECRET
+});
+
 
 let Users = require('../models/users');
 
@@ -25,13 +41,39 @@ router.get('/logout', function(req, res){
 
 //Render profile pages
 router.get('/profile/:id', ensureAuthenticated, function(req, res){
-
+	//find user and redirect to their page
 	let query = {_id:req.params.id}
 
 	Users.findById(req.params.id, function(err, user){
 			res.render('profile', {
 			profile: user.name
 		})
+	});
+});
+
+
+//Handle User image submission
+const type = upload.single('avatar');
+
+router.post('/upload:id', type, ensureAuthenticated, function(req, res, next){
+	const tempPath = req.file.path;
+
+	let query = {_id:req.params.id}
+
+	Users.findById(req.params.id, function(err, user){
+		if (user){
+			cloudinary.v2.uploader.upload(tempPath, {public_id: user.profile.id}, function(err, result){
+				if(err){
+					console.log(err);
+					return;
+				}else{
+					//find user and save profile pic
+					user.profilePic = result.url;
+					req.flash('success', 'Image successfully uploaded')
+					next();
+				}
+			});
+		}
 	});
 });
 
