@@ -183,4 +183,9 @@ let users = require('./routes/users');
 app.use('/users', users);
 
 
+//Allow routing through posts
+let posts = require('./routes/posts')
+app.use('/posts', posts);
+
+
 

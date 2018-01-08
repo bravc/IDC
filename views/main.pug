@@ -13,8 +13,8 @@ block content
 			.col-md-6
 				.widget-area.no-padding.blank
 					.status-upload
-						form
-							textarea(placeholder='What are you doing right now?')
+						form(method='POST', action='/posts/new')
+							textarea(name='body', placeholder='What are you doing right now?')
 							ul
 								li
 									a(title='', data-toggle='tooltip', data-placement='bottom', data-original-title='Audio')
@@ -40,29 +40,29 @@ block content
 
 
 
-//- if !users.empty
-//- 	each user, i in users
-
-//- 		.container
-//- 			.row
-//- 				.col-sm-12
-//- 					h3 Recent Posts
-//- 				// /col-sm-12
-//- 			// /row
-//- 			.row
-//- 				.col-sm-1
-//- 					.thumbnail
-//- 						img.img-responsive.user-photo(src='https://ssl.gstatic.com/accounts/ui/avatar_2x.png')
-//- 					// /thumbnail
-//- 				// /col-sm-1
-//- 				.col-sm-5
-//- 					.panel.panel-default
-//- 						.panel-heading
-//- 							strong user.
-//- 							span.text-muted commented 5 days ago
-//- 						.panel-body
-//- 							| Panel content
-//- 						// /panel-body
-//- 					// /panel panel-default
-//- 				// /col-sm-5		
+if !users.empty
+	each user, i in users
+		each post in user.posts
+			.container
+				.row
+					.col-sm-12
+						h3 Recent Posts
+					// /col-sm-12
+				// /row
+				.row
+					.col-sm-1
+						.thumbnail
+							img.img-responsive.user-photo(src='https://ssl.gstatic.com/accounts/ui/avatar_2x.png')
+						// /thumbnail
+					// /col-sm-1
+					.col-sm-5
+						.panel.panel-default
+							.panel-heading
+								strong user.
+								span.text-muted commented 5 days ago
+							.panel-body
+								| Panel content
+							// /panel-body
+						// /panel panel-default
+					// /col-sm-5		
 
