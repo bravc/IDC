@@ -63,9 +63,10 @@ router.post('/upload/:id', type, ensureAuthenticated, function(req, res, next){
 	Users.findById(req.params.id, function(err, user){
 		console.log("Requesting user " + req.user.id + "vs Profile " + req.params.id);
 		if (user && (req.user.id === req.params.id)) {
-			cloudinary.v2.uploader.upload(tempPath, {public_id: 'user.id/profilePic'}, function(err, result){
+			cloudinary.v2.uploader.upload(tempPath, {public_id: user.id + '/profilePic'}, function(err, result){
 				if(err){
 					console.log(err);
+					req.flash('danger', 'Image upload error')
 					return;
 				}else{
 					//find user and save profile pic
