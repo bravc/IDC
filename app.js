@@ -103,7 +103,7 @@ app.get('*', function(req, res, next){
 
 //Serialize user data
 passport.serializeUser(function(user, done) {
-	done(null, user);
+	done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {

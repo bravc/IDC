@@ -2,22 +2,24 @@ extends layout
 
 block content 
 
-	if user.profilePic
+	if profile.profilePic
 	.container
 		.row
 			.profile-header-container
 				.profile-header-img
-					img.img-circle(src=user.profilePic)
+					img.img-circle(src=profile.profilePic)
 					// badge
 					.rank-label-container
-						span.label.label-default.rank-label=user.name
+						span.label.label-default.rank-label=profile.name
 
-	form(method='POST' enctype='multipart/form-data' action='/users/upload/' + user.id)
-		#form-group
-			label Upload Profile Picture
-			input.form-control(type='file' name='avatar')
-		br
-		input.btn.btn-primary(type='submit' value='Submit')
+
+	if user.id == profile.id
+		form(method='POST' enctype='multipart/form-data' action='/users/upload/' + user.id)
+			#form-group
+				label Upload Profile Picture
+				input.form-control(type='file' name='avatar')
+			br
+			input.btn.btn-primary(type='submit' value='Submit')
 
 
 

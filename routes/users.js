@@ -46,7 +46,7 @@ router.get('/profile/:id', ensureAuthenticated, function(req, res){
 
 	Users.findById(req.params.id, function(err, user){
 			res.render('profile', {
-			profile: user.name
+			profile: user
 		})
 	});
 });
@@ -61,7 +61,8 @@ router.post('/upload/:id', type, ensureAuthenticated, function(req, res, next){
 	let query = {_id:req.params.id}
 
 	Users.findById(req.params.id, function(err, user){
-		if (user && user.id === req.user.id){
+		console.log("Requesting user " + req.user.id + "vs Profile " + req.params.id);
+		if (user && (req.user.id === req.params.id)) {
 			cloudinary.v2.uploader.upload(tempPath, {public_id: 'user.id/profilePic'}, function(err, result){
 				if(err){
 					console.log(err);
@@ -76,11 +77,14 @@ router.post('/upload/:id', type, ensureAuthenticated, function(req, res, next){
 							return;
 						}else{
 							req.flash('success', 'Image successfully uploaded')
-							res.redirect('/users/profile/' + user.id)
+							res.redirect('/users/profile/' + req.params.id)
 						}
 					});
 				}
 			});
+		}else{
+			req.flash('danger', 'Do not have write access');
+			next();
 		}
 	});
 });

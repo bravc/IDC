@@ -41,7 +41,10 @@ html
                   button.btn.dropdown-toggle(role='button', 
                     style="margin: 10px 10px" data-toggle='dropdown', 
                     aria-haspopup='true',aria-expanded='true')=user.name + "  "
-                      i.fa.fa-user-circle(aria-hidden='true')
+                      if user.profilePic
+                        img(src=user.profilePic, height='15px', width='15px')
+                      else
+                        i.fa.fa-user-circle(aria-hidden='true')
                   ul.dropdown-menu
                     li
                       a(href="/users/profile/" + user.id) View Profile
