@@ -34,11 +34,18 @@ html
               a(href='/') Home
           ul.nav.navbar-nav.navbar-right
             if user
-              li 
-                a(href='/users/logout') Logout
               li
-                a(href='/users/profile/' + user._id)=user.name + " "
-                  i.fa.fa-user-circle(aria-hidden='true')
+                .dropdown.show
+                  button#dropdownMenuLink.btn.btn-secondary.btn-group.dropdown-toggle(role='button', 
+                    style="margin: 10px 10px" data-toggle='dropdown', 
+                    aria-haspopup='true',aria-expanded='true')=user.name + "  "
+                      i.fa.fa-user-circle(aria-hidden='true')
+                  ul.dropdown-menu
+                    li
+                      a(href="/users/profile/" + user.id) View Profile
+                    li
+                      a(href="users/logout") Logout
+
             else
               li
                 a(href='/users/login') Login
@@ -50,3 +57,4 @@ html
       footer
         p Copyright &copy; 2017
   //  script(src='/js/main.js')  
+
