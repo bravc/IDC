@@ -1,15 +1,27 @@
 extends layout
 
 block content 
-	h1 #{profile}
-
-	form(method='POST' enctype='multipart/form-data' action='/users/upload/' + user.id)
-		input(type='file' name='avatar')
-		input(type='submit' value='Submit')
-
 
 	if user.profilePic
-		img(src= user.profilePic )
+	.container
+		.row
+			.profile-header-container
+				.profile-header-img
+					img.img-circle(src=user.profilePic)
+					// badge
+					.rank-label-container
+						span.label.label-default.rank-label=user.name
+
+	form(method='POST' enctype='multipart/form-data' action='/users/upload/' + user.id)
+		#form-group
+			label Upload Profile Picture
+			input.form-control(type='file' name='avatar')
+		br
+		input.btn.btn-primary(type='submit' value='Submit')
+
+
+
+
 
 
 
