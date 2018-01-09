@@ -56,37 +56,47 @@ router.get('/profile/:id', ensureAuthenticated, function(req, res){
 const type = upload.single('avatar');
 
 router.post('/upload/:id', type, ensureAuthenticated, function(req, res, next){
-	const tempPath = req.file.path;
+	req.checkBody('avatar', 'File is required').notEmpty();
 
-	let query = {_id:req.params.id}
+	let errors = req.validationErrors();
 
-	Users.findById(req.params.id, function(err, user){
-		if (user && (req.user.id === req.params.id)) {
-			cloudinary.uploader.upload(tempPath, {public_id: user.id + '/profilePic', allowed_formats: ['png', 'jpg']}, function(err, result){
-				if(err){
-					console.log(err);
-					req.flash('danger', 'Image upload error: ' + err.message)
-					res.redirect('/users/profile/' + req.params.id)
+	if(errors){
+		req.flash('danger', 'No image uploaded!');
+		res.redirect('/users/profile/' + req.params.id);
+	}else{
+		const tempPath = req.file.path;
 
-				}else{
-					//find user and save profile pic
-					user.profilePic = result.url;
-					user.save(function(err){
-						if(err){
-							console.log(err);
-							return;
-						}else{
-							req.flash('success', 'Image successfully uploaded')
-							res.redirect('/users/profile/' + req.params.id)
-						}
-					});
-				}
-			});
-		}else{
-			req.flash('danger', 'Do not have write access');
-			next();
-		}
-	});
+		let query = {_id:req.params.id}
+
+		Users.findById(req.params.id, function(err, user){
+			if (user && (req.user.id === req.params.id)) {
+				cloudinary.uploader.upload(tempPath, {public_id: user.id + '/profilePic', allowed_formats: ['png', 'jpg']}, function(err, result){
+					if(err){
+						console.log(err);
+						req.flash('danger', 'Image upload error: ' + err.message)
+						res.redirect('/users/profile/' + req.params.id)
+
+					}else{
+						//find user and save profile pic
+						user.profilePic = result.url;
+						user.save(function(err){
+							if(err){
+								console.log(err);
+								return;
+							}else{
+								req.flash('success', 'Image successfully uploaded')
+								res.redirect('/users/profile/' + req.params.id)
+							}
+						});
+					}
+				});
+			}else{
+				req.flash('danger', 'Do not have write access');
+				next();
+			}
+		});
+	}
+
 });
 
 

@@ -12,10 +12,11 @@ router.post('/new', ensureAuthenticated, function(req, res){
 
 	let errors = req.validationErrors();
 
+	console.log(errors);
+
 	if (errors){
-		res.render('main', {
-			errors: errors
-		});
+		req.flash('danger', 'Nothing written');
+		res.redirect('/');
 	}else{
 		let post = new Post();
 		post.author = req.user;
