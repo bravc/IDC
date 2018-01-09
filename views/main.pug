@@ -61,16 +61,17 @@ block content
 												a(href='#' + post._id, data-toggle='tooltip', data-placement='top', style='padding: 3px' data-original-title='Picture')
 													i.fa.fa-comments
 										.left
+											if post.like_count
+												span.text-muted=post.like_count										
 											a.add-like(href='#' + post._id, data-id=post._id, data-toggle='tooltip', data-placement='top', style='padding: 3px' data-original-title='Picture')
-												if post.like_count
-													#{post.like_count}
-											
 												i.fa.fa-thumbs-up(data-id=post._id)
+											if post.dislike_count
+												span.text-muted=post.dislike_count
 											a.add-dislike(href='#' + post._id,data-id=post._id, data-toggle='tooltip', data-placement='top', style='padding: 3px' data-original-title='Picture')
-												if post.dislike_count
-													#{post.dislike_count}
-
 												i.fa.fa-thumbs-down(data-id=post._id)
+
+
+												
 					br
 
 		
