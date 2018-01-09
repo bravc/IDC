@@ -10,8 +10,6 @@ let date = new Date();
 router.post('/new', ensureAuthenticated, function(req, res){
 	req.checkBody('body', 'Body is required').notEmpty();
 
-	console.log(req.body.body + "This is the body")
-
 	let errors = req.validationErrors();
 
 	if (errors){
@@ -20,7 +18,7 @@ router.post('/new', ensureAuthenticated, function(req, res){
 		});
 	}else{
 		let post = new Post();
-		post.name = req.user.name;
+		post.author = req.user;
 		post.content = req.body.body;
 		post.date = date.toDateString();
 
@@ -29,7 +27,7 @@ router.post('/new', ensureAuthenticated, function(req, res){
 				console.log(err);
 				return;
 			}else{
-				req.user.posts = post;
+				req.user.posts.push(post);
 				req.user.save(function(err){
 					if(err){
 						console.log(err);

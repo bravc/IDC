@@ -36,13 +36,14 @@ block content
 
 
 	br
+	br
 
 
 
 
 
 	if !users.empty
-		each user, i in users
+		each user in users
 			each post in user.posts
 				.container
 					.row
@@ -54,9 +55,9 @@ block content
 						.col-sm-5
 							.panel.panel-default
 								.panel-heading
-									strong=user.name
-									span.text-muted=post.date
-								.panel-body=post.content
+									strong #{user.name}
+									span.text-muted= "  " + post.date
+								.panel-body  #{post.content}
 								// /panel-body
 							// /panel panel-default
 						// /col-sm-5		

@@ -48,7 +48,7 @@ router.get('/profile/:id', ensureAuthenticated, function(req, res){
 			res.render('profile', {
 			profile: user
 		})
-	});
+	}).populate('posts');
 });
 
 

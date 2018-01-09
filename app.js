@@ -168,13 +168,16 @@ app.listen(PORT, function(){
 
 //Home Route
 app.get('/', function(req, res){
-		User.find({}, function(err, users) {
-		var userMap = {};
+	User.find({}, function(err, users) {
+		let userMap = {};
+
+		//add all users
 		users.forEach(function(user) {
 			userMap[user._id] = user;
 		});
-			res.render('main', {users: userMap});
-	});
+
+		res.render('main', {users: userMap});
+	}).populate('posts');
 });
 
 

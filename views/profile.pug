@@ -26,18 +26,18 @@ block content
 	br
 
 
-	each post in user.posts
+	each post in profile.posts
 		.container
 			.row
 				.col-sm-1
 					.thumbnail
-						img.img-responsive.user-photo(src=user.profilePic)
+						img.img-responsive.user-photo(src=profile.profilePic)
 					// /thumbnail
 				// /col-sm-1
 				.col-sm-5
 					.panel.panel-default
 						.panel-heading
-							strong=user.name
+							strong=profile.name
 							span.text-muted=post.date
 						.panel-body=post.content
 						// /panel-body
