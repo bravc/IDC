@@ -29,20 +29,31 @@ block content
 	each post in profile.posts
 		.container
 			.row
-				.col-sm-1
+				.col-sm-2
 					.thumbnail
 						img.img-responsive.user-photo(src=profile.profilePic)
 					// /thumbnail
 				// /col-sm-1
-				.col-sm-11
+				.col-sm-10
 					.panel.panel-default
 						.panel-heading
-							strong=profile.name
-							span.text-muted="  " + post.date
-						.panel-body=post.content
-						// /panel-body
-					// /panel panel-default
-				// /col-sm-5		
+							a(href='/users/profile/' + profile._id)
+								strong #{user.name}
+							span.text-muted= "  " + post.date
+							.pull-right
+								a(href='#' + post._id, data-toggle='tooltip', data-placement='bottom', data-original-title='Picture')
+									i.fa.fa-trash-o
+						.panel-body  #{post.content}
+						.panel-footer
+							.right
+									a(href='#' + post._id, data-toggle='tooltip', data-placement='top', style='padding: 3px' data-original-title='Picture')
+										i.fa.fa-thumbs-up
+									a(href='#' + post._id, data-toggle='tooltip', data-placement='top', style='padding: 3px' data-original-title='Picture')
+										i.fa.fa-thumbs-down
+
+				
+									a(href='#' + post._id, data-toggle='tooltip', data-placement='top', style='padding: 3px' data-original-title='Picture')
+										i.fa.fa-comments
 
 
 
