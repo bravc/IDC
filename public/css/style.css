@@ -85,7 +85,7 @@ body, html {
 
 /**
  * Ranking component
- */
+/* */
 .rank-label-container {
     margin-top: -19px;
     /* z-index: 1000; */
@@ -99,7 +99,6 @@ body, html {
 }
 
 .thumbnail {
-    padding:0px;
 }
 
 .panel-footer{
@@ -268,7 +267,7 @@ margin-right: 7px;
 
 
 
-
+*/
 
 
 

@@ -2,13 +2,9 @@ extends layout
 
 block content 
 
-
-
-
-
 	.container
 		.row
-			.col-md-6
+			.col-md-12
 				.widget-area.no-padding.blank
 					.status-upload
 						form(method='POST', action='/posts/new')
@@ -36,21 +32,17 @@ block content
 	br
 	br
 
-
-
-
-
 	if !users.empty
 		each user in users
 			each post in user.posts
 				.container
 					.row
-						.col-sm-2
+						.col-xs-3.col-sm-2.col-md-2.col-lg-2
 							.thumbnail
 								img.img-responsive.user-photo(src=user.profilePic)
 							// /thumbnail
 						// /col-sm-1
-						.col-sm-10
+						.col-xs-9.col-sm-10.col-md-10.col-lg-10
 							.panel.panel-default
 								.panel-heading
 									a(href='/users/profile/' + user._id)
