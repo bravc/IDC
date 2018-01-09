@@ -123,6 +123,12 @@ body, html {
   border-style:solid solid outset;
   pointer-events:none;
 }
+
+.panel-heading a {
+      color: #777777;
+
+}
+
 .panel>.panel-heading:after{
   border-width:7px;
   border-right-color:#f7f7f7;
