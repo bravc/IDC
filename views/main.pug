@@ -65,12 +65,12 @@ block content
 												if post.likes 
 													#{post.likes}
 											
-												i.fa.fa-thumbs-up
+												i.fa.fa-thumbs-up(data-id=post._id)
 											a.add-dislike(href='#' + post._id,data-id=post._id, data-toggle='tooltip', data-placement='top', style='padding: 3px' data-original-title='Picture')
 												if post.dislikes 
 													#{post.dislikes}
 
-												i.fa.fa-thumbs-down
+												i.fa.fa-thumbs-down(data-id=post._id)
 					br
 
 		
