@@ -12,4 +12,12 @@ const PostSchema = Schema({
   dislike_count: {type: Number, required:false, default: 0}
 });
 
+
+ PostSchema.pre('remove', function(next){
+    this.model('User').remove({posts: this._id}, next);
+ });
+
+
+
+
 const Post = module.exports = mongoose.model('Post', PostSchema);
