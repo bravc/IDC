@@ -56,11 +56,12 @@ router.get('/profile/:id', ensureAuthenticated, function(req, res){
 const type = upload.single('avatar');
 
 router.post('/upload/:id', type, ensureAuthenticated, function(req, res, next){
-	req.checkBody('avatar', 'File is required').notEmpty();
+	
+	console.log(req.file);
 
-	let errors = req.validationErrors();
+	
 
-	if(errors){
+	if(!req.file){
 		req.flash('danger', 'No image uploaded!');
 		res.redirect('/users/profile/' + req.params.id);
 	}else{
@@ -101,7 +102,7 @@ router.post('/upload/:id', type, ensureAuthenticated, function(req, res, next){
 
 
 //Handle view users request
-router.get('/registered', function(req, res, next){
+router.get('/registered', ensureAuthenticated function(req, res, next){
 		Users.find({}, function(err, users) {
 		var userMap = {};
 		users.forEach(function(user) {

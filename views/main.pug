@@ -58,8 +58,11 @@ block content
 									a(href='/users/profile/' + user.id)
 										strong #{user.name}
 									span.text-muted= "  " + post.date
+									.pull-right
+										a(href='/posts/delete/' + post.id, data-toggle='tooltip', data-placement='bottom', data-original-title='Picture')
+											i.fa.fa-trash-o
 								.panel-body  #{post.content}
 								// /panel-body
-							// /panel panel-default
-						// /col-sm-5		
+						// /panel panel-default
+					// /col-sm-5		
 
