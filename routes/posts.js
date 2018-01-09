@@ -28,7 +28,7 @@ router.post('/new', ensureAuthenticated, function(req, res){
 				console.log(err);
 				return;
 			}else{
-				req.user.posts.push(post);
+				req.user.posts.push(post._id);
 				req.user.save(function(err){
 					if(err){
 						console.log(err);
@@ -41,6 +41,20 @@ router.post('/new', ensureAuthenticated, function(req, res){
 		});
 	}
 
+});
+
+router.post('/posts/like/:id', ensureAuthenticated, function(req, res){
+	let query = {_id: req.params.id}
+
+	console.log("got here");
+
+	Post.findById(req.params.id, function(err, post){
+		if (err){
+			console.log(err);
+		}else{
+			post.likes = post.likes + 1;
+		}
+	});
 });
 
 

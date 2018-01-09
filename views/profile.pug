@@ -38,22 +38,29 @@ block content
 					.panel.panel-default
 						.panel-heading
 							a(href='/users/profile/' + profile._id)
-								strong #{user.name}
+								strong #{profile.name}
 							span.text-muted= "  " + post.date
 							.pull-right
-								a(href='#' + post._id, data-toggle='tooltip', data-placement='bottom', data-original-title='Picture')
+								a.delete-post(href='#', data-id=post._id, data-toggle='tooltip', data-placement='bottom', data-original-title='Picture')
 									i.fa.fa-trash-o
 						.panel-body  #{post.content}
 						.panel-footer
 							.right
-									a(href='#' + post._id, data-toggle='tooltip', data-placement='top', style='padding: 3px' data-original-title='Picture')
-										i.fa.fa-thumbs-up
-									a(href='#' + post._id, data-toggle='tooltip', data-placement='top', style='padding: 3px' data-original-title='Picture')
-										i.fa.fa-thumbs-down
-
 				
 									a(href='#' + post._id, data-toggle='tooltip', data-placement='top', style='padding: 3px' data-original-title='Picture')
 										i.fa.fa-comments
+							.left
+								a.add-like(href='#' + post._id, data-id=post._id, data-toggle='tooltip', data-placement='top', style='padding: 3px' data-original-title='Picture')
+									if post.likes 
+										#{post.likes}
+								
+									i.fa.fa-thumbs-up
+								a.add-like(href='#' + post._id,data-id=post._id, data-toggle='tooltip', data-placement='top', style='padding: 3px' data-original-title='Picture')
+									if post.dislikes 
+										#{post.dislikes}
+
+									i.fa.fa-thumbs-down
+		br
 
 
 
