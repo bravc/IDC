@@ -8,6 +8,7 @@ const session = require('express-session');
 const passport = require('passport');
 const config = require('./config/database');
 const User = require('./models/users');
+const Post = require('./models/post');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 const PORT = 8080;
@@ -168,15 +169,31 @@ app.listen(PORT, function(){
 
 //Home Route
 app.get('/', function(req, res){
+
 	User.find({}, function(err, users) {
 		let userMap = {};
+		let userPosts = [];
 
 		//add all users
 		users.forEach(function(user) {
 			userMap[user._id] = user;
 		});
 
-		res.render('main', {users: userMap});
+		Post.find({}, function(err, posts){
+			if(err){
+				console.log(err);
+			}else{
+				posts.forEach(function(post){
+					userPosts.push(post);
+				});
+			}
+
+			userPosts.sort(function(a, b){
+				return(a.date < b.date);
+			});
+
+			res.render('main', {users: userMap, posts: userPosts});
+		}).populate('author');
 	}).populate('posts');
 });
 
