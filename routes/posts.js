@@ -5,7 +5,7 @@ let Users = require('../models/users');
 
 let Post = require('../models/post');
 
-let date = new Date();
+
 
 router.post('/new', ensureAuthenticated, function(req, res){
 	req.checkBody('body', 'Body is required').notEmpty();
@@ -18,6 +18,7 @@ router.post('/new', ensureAuthenticated, function(req, res){
 		req.flash('danger', "There's nothing wrtiten!");
 		res.redirect('/');
 	}else{
+		let date = new Date();
 		let post = new Post();
 		post.author = req.user;
 		post.content = req.body.body;
@@ -43,39 +44,82 @@ router.post('/new', ensureAuthenticated, function(req, res){
 
 });
 
-router.post('/posts/like/:id', ensureAuthenticated, function(req, res){
+router.post('/like/:id', ensureAuthenticated, function(req, res){
 	let query = {_id: req.params.id}
 
-	console.log("got here");
+	console.log(req.params.id);
 
 	Post.findById(req.params.id, function(err, post){
 		if (err){
-			console.log(err);
+			res.status(500).send(err);
 		}else{
-			post.likes = post.likes + 1;
-		}
-	});
-});
-
-
-router.delete('delete/:id', ensureAuthenticated, function(req, res){
-	let query = {_id: req.params.id}
-
-	Post.findById(req.params.id, function(err, post){
-		if(post.author != req.user){
-			req.flash('danger', "That's not yours!");
-			res.redirect(req.url);
-		}else{
-			Post.remove(query, function(err){
-				if(err){
-					console.log(err);
+			if (post.likes){
+				post.likes = post.likes +1;
+			}else{
+				post.likes = 1;
+			}
+			post.save(function(err){
+				if (err){
+					console.log("couldnt save");
 				}else{
-					req.flash('success', "Post deleted!");
-					res.redirect(req.url);
+					console.log("got here")
+					res.send('Success');
 				}
 			});
 		}
-	});
+	}).populate('author');
+});
+
+
+router.post('/dislike/:id', ensureAuthenticated, function(req, res){
+	let query = {_id: req.params.id}
+
+	console.log(req.params.id);
+
+	Post.findById(req.params.id, function(err, post){
+		if (err){
+			res.status(500).send(err);
+		}else{
+			if (post.dislikes){
+				post.dislikes = post.dislikes +1;
+			}else{
+				post.dislikes = 1;
+			}
+			post.save(function(err){
+				if (err){
+					console.log("couldnt save");
+				}else{
+					console.log("got here")
+					res.send('Success');
+				}
+			});
+		}
+	}).populate('author');
+});
+
+
+
+router.delete('/delete/:id', ensureAuthenticated, function(req, res){
+	let query = {_id: req.params.id}
+	Post.findById(req.params.id, function(err, post){
+		if(!err){
+			if(post.author != req.user._id){
+				req.flash('danger', "That's not yours!");
+				res.status(500).send();
+			}else{
+				Post.remove(query, function(err){
+					if(err){
+						console.log(err);
+					}else{
+						req.flash('success', "Post deleted!");
+						res.send('Success');
+					}
+				});
+			}
+		}else{
+			console.log(err);
+		}
+	}).populate('author');
 });
 
 
