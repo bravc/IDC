@@ -44,6 +44,27 @@ router.post('/new', ensureAuthenticated, function(req, res){
 });
 
 
+router.delete('delete/:id', ensureAuthenticated, function(req, res){
+	let query = {_id: req.params.id}
+
+	Post.findById(req.params.id, function(err, post){
+		if(post.author != req.user){
+			req.flash('danger', "That's not yours!");
+			res.redirect(req.url);
+		}else{
+			Post.remove(query, function(err){
+				if(err){
+					console.log(err);
+				}else{
+					req.flash('success', "Post deleted!");
+					res.redirect(req.url);
+				}
+			});
+		}
+	});
+});
+
+
 
 // Access Control
 function ensureAuthenticated(req, res, next){

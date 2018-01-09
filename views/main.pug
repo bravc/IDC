@@ -55,11 +55,11 @@ block content
 						.col-sm-10
 							.panel.panel-default
 								.panel-heading
-									a(href='/users/profile/' + user.id)
+									a(href='/users/profile/' + user._id)
 										strong #{user.name}
 									span.text-muted= "  " + post.date
 									.pull-right
-										a(href='/posts/delete/' + post.id, data-toggle='tooltip', data-placement='bottom', data-original-title='Picture')
+										a(href='#' + post._id, data-toggle='tooltip', data-placement='bottom', data-original-title='Picture')
 											i.fa.fa-trash-o
 								.panel-body  #{post.content}
 								// /panel-body

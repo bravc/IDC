@@ -102,7 +102,7 @@ router.post('/upload/:id', type, ensureAuthenticated, function(req, res, next){
 
 
 //Handle view users request
-router.get('/registered', ensureAuthenticated function(req, res, next){
+router.get('/registered', ensureAuthenticated, function(req, res, next){
 		Users.find({}, function(err, users) {
 		var userMap = {};
 		users.forEach(function(user) {
@@ -120,7 +120,7 @@ function ensureAuthenticated(req, res, next){
     return next();
   } else {
     req.flash('danger', 'Please login');
-    res.redirect('/users/login');
+    res.redirect('/');
   }
 }
 
