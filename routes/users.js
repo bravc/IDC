@@ -45,6 +45,10 @@ router.get('/profile/:id', ensureAuthenticated, function(req, res){
 	let query = {_id:req.params.id}
 
 	Users.findById(req.params.id, function(err, user){
+			user.posts.sort(function(a, b){
+				return (a < b);
+			});
+
 			res.render('profile', {
 			profile: user
 		})
