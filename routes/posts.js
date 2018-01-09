@@ -5,8 +5,7 @@ let Users = require('../models/users');
 
 let Post = require('../models/post');
 
-
-
+//Make a new post
 router.post('/new', ensureAuthenticated, function(req, res){
 	req.checkBody('body', 'Body is required').notEmpty();
 
@@ -44,6 +43,7 @@ router.post('/new', ensureAuthenticated, function(req, res){
 
 });
 
+//Add or remove a like from a post
 router.post('/like/:id', ensureAuthenticated, function(req, res){
 	let query = {_id: req.params.id}
 
@@ -94,7 +94,7 @@ router.post('/like/:id', ensureAuthenticated, function(req, res){
 	}).populate('likes');
 });
 
-
+//Add or remove a dislike from a post
 router.post('/dislike/:id', ensureAuthenticated, function(req, res){
 	let query = {_id: req.params.id}
 
@@ -145,8 +145,7 @@ router.post('/dislike/:id', ensureAuthenticated, function(req, res){
 	}).populate('dislikes');
 });
 
-
-
+//Delete a post
 router.delete('/delete/:id', ensureAuthenticated, function(req, res){
 	let query = {_id: req.params.id}
 	Post.findById(req.params.id, function(err, post){
@@ -170,7 +169,6 @@ router.delete('/delete/:id', ensureAuthenticated, function(req, res){
 		}
 	}).populate('author');
 });
-
 
 
 // Access Control
