@@ -15,7 +15,7 @@ router.post('/new', ensureAuthenticated, function(req, res){
 	console.log(errors);
 
 	if (errors){
-		req.flash('danger', "There's nothing wrtiten!");
+		req.flash('danger', "There's nothing written!");
 		res.redirect('/');
 	}else{
 		let date = new Date();
