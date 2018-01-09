@@ -12,7 +12,7 @@ $(document).ready(function(){
         console.log(err);
       },
       already: function(response){
-        req.flash('danger', "You already liked this!")
+        console.log('already');
       }
     });
   });

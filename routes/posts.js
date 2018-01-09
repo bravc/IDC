@@ -47,26 +47,51 @@ router.post('/new', ensureAuthenticated, function(req, res){
 router.post('/like/:id', ensureAuthenticated, function(req, res){
 	let query = {_id: req.params.id}
 
-	console.log(req.params.id);
+	var liked = false;
 
 	Post.findById(req.params.id, function(err, post){
 		if (err){
 			res.status(500).send(err);
 		}else{
-			if (post.likes){
-				post.likes = post.likes +1;
+
+			//Has anyone liked it yet?
+			if(!post.likes){
+				post.likes.push(req.user);
+			//Check if you've already liked it
 			}else{
-				post.likes = 1;
-			}
-			post.save(function(err){
-				if (err){
-					console.log(err);
+
+				post.likes.forEach(function(user){
+					if(user._id.equals(req.user._id)){
+						console.log("got here")
+						liked = true;
+					}
+				});
+				//If you have liked it, remove your like
+				if(liked){
+					post.likes.pop(req.user);
+					post.like_count--;
+					post.save(function(err){
+						if (err){
+							console.log(err);
+						}else{
+							res.send('Success');
+						}
+					});
+				//otherwise add it and save
 				}else{
-					res.send('Success');
+					post.likes.push(req.user);
+					post.like_count++;
+					post.save(function(err){
+						if (err){
+							console.log(err);
+						}else{
+							res.send('Success');
+						}
+					});
 				}
-			});
+			}
 		}
-	}).populate('author');
+	}).populate('likes');
 });
 
 
@@ -83,7 +108,7 @@ router.post('/dislike/:id', ensureAuthenticated, function(req, res){
 			//Has anyone disliked it yet?
 			if(!post.dislikes){
 				post.dislikes.push(req.user);
-			//Check if you've already liked it
+			//Check if you've already disliked it
 			}else{
 
 				post.dislikes.forEach(function(user){
@@ -92,10 +117,17 @@ router.post('/dislike/:id', ensureAuthenticated, function(req, res){
 						disliked = true;
 					}
 				});
-				//If you have seen it, tell ajax that
+				//If you have disliked it, remove your dislike
 				if(disliked){
-					console.log("seen it")
-					res.send('already');
+					post.dislikes.pop(req.user);
+					post.dislike_count--;
+					post.save(function(err){
+						if (err){
+							console.log(err);
+						}else{
+							res.send('Success');
+						}
+					});
 				//otherwise add it and save
 				}else{
 					post.dislikes.push(req.user);
