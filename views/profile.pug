@@ -34,11 +34,11 @@ block content
 						img.img-responsive.user-photo(src=profile.profilePic)
 					// /thumbnail
 				// /col-sm-1
-				.col-sm-5
+				.col-sm-11
 					.panel.panel-default
 						.panel-heading
 							strong=profile.name
-							span.text-muted=post.date
+							span.text-muted="  " + post.date
 						.panel-body=post.content
 						// /panel-body
 					// /panel panel-default

@@ -8,13 +8,13 @@ block content
 
 	.container
 		.row
-			h3 New Post
+			h2 New Post
 		.row
 			.col-md-6
 				.widget-area.no-padding.blank
 					.status-upload
 						form(method='POST', action='/posts/new')
-							textarea(name='body', placeholder='What are you doing right now?')
+							textarea(name='body', placeholder='What are you up to?')
 							ul
 								li
 									a(title='', data-toggle='tooltip', data-placement='bottom', data-original-title='Audio')
@@ -47,15 +47,16 @@ block content
 			each post in user.posts
 				.container
 					.row
-						.col-sm-1
+						.col-sm-2
 							.thumbnail
 								img.img-responsive.user-photo(src=user.profilePic)
 							// /thumbnail
 						// /col-sm-1
-						.col-sm-5
+						.col-sm-10
 							.panel.panel-default
 								.panel-heading
-									strong #{user.name}
+									a(href='/users/profile/' + user.id)
+										strong #{user.name}
 									span.text-muted= "  " + post.date
 								.panel-body  #{post.content}
 								// /panel-body
