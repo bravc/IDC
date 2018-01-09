@@ -60,9 +60,8 @@ router.post('/like/:id', ensureAuthenticated, function(req, res){
 			}
 			post.save(function(err){
 				if (err){
-					console.log("couldnt save");
+					console.log(err);
 				}else{
-					console.log("got here")
 					res.send('Success');
 				}
 			});
@@ -74,27 +73,44 @@ router.post('/like/:id', ensureAuthenticated, function(req, res){
 router.post('/dislike/:id', ensureAuthenticated, function(req, res){
 	let query = {_id: req.params.id}
 
-	console.log(req.params.id);
+	var disliked = false;
 
 	Post.findById(req.params.id, function(err, post){
 		if (err){
 			res.status(500).send(err);
 		}else{
-			if (post.dislikes){
-				post.dislikes = post.dislikes +1;
+
+			//Has anyone disliked it yet?
+			if(!post.dislikes){
+				post.dislikes.push(req.user);
+			//Check if you've already liked it
 			}else{
-				post.dislikes = 1;
-			}
-			post.save(function(err){
-				if (err){
-					console.log("couldnt save");
+
+				post.dislikes.forEach(function(user){
+					if(user._id.equals(req.user._id)){
+						console.log("got here")
+						disliked = true;
+					}
+				});
+				//If you have seen it, tell ajax that
+				if(disliked){
+					console.log("seen it")
+					res.send('already');
+				//otherwise add it and save
 				}else{
-					console.log("got here")
-					res.send('Success');
+					post.dislikes.push(req.user);
+					post.dislike_count++;
+					post.save(function(err){
+						if (err){
+							console.log(err);
+						}else{
+							res.send('Success');
+						}
+					});
 				}
-			});
+			}
 		}
-	}).populate('author');
+	}).populate('dislikes');
 });
 
 
@@ -103,7 +119,8 @@ router.delete('/delete/:id', ensureAuthenticated, function(req, res){
 	let query = {_id: req.params.id}
 	Post.findById(req.params.id, function(err, post){
 		if(!err){
-			if(post.author != req.user._id){
+			console.log(post.author._id + "  " + req.user._id);
+			if(!post.author._id.equals(req.user._id)){
 				req.flash('danger', "That's not yours!");
 				res.status(500).send();
 			}else{

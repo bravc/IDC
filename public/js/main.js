@@ -10,6 +10,9 @@ $(document).ready(function(){
       },
       error: function(err){
         console.log(err);
+      },
+      already: function(response){
+        req.flash('danger', "You already liked this!")
       }
     });
   });
@@ -24,10 +27,15 @@ $(document).ready(function(){
       type:'POST',
       url: '/posts/dislike/'+id,
       success: function(response){
+        console.log('good');
         window.location.href='/';
       },
       error: function(err){
         console.log(err);
+      },
+      already: function(response){
+        console.log('already');
+        // req.flash('danger', "You already disliked this!")
       }
     });
   });
