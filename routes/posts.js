@@ -15,13 +15,13 @@ router.post('/new', ensureAuthenticated, function(req, res){
 	console.log(errors);
 
 	if (errors){
-		req.flash('danger', 'Nothing written');
+		req.flash('danger', "There's nothing wrtiten!");
 		res.redirect('/');
 	}else{
 		let post = new Post();
 		post.author = req.user;
 		post.content = req.body.body;
-		post.date = date.toDateString();
+		post.date = date.toLocaleDateString() + " at " + date.toLocaleTimeString();
 
 		post.save(function(err){
 			if(err){
