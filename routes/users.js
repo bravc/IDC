@@ -16,7 +16,7 @@ cloudinary.config({
 	api_secret: API_SECRET
 });
 
-
+//Add user database
 let Users = require('../models/users');
 
 //Render login page
@@ -54,13 +54,7 @@ router.get('/profile/:id', ensureAuthenticated, function(req, res){
 
 //Handle User image submission
 const type = upload.single('avatar');
-
 router.post('/upload/:id', type, ensureAuthenticated, function(req, res, next){
-	
-	console.log(req.file);
-
-	
-
 	if(!req.file){
 		req.flash('danger', 'No image uploaded!');
 		res.redirect('/users/profile/' + req.params.id);
@@ -111,8 +105,6 @@ router.get('/registered', ensureAuthenticated, function(req, res, next){
 			res.render('registeredUsers', {users: userMap});
 	});
 });
-
-
 
 // Access Control
 function ensureAuthenticated(req, res, next){
