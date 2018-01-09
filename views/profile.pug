@@ -27,41 +27,41 @@ block content
 
 
 	each post in profile.posts
-					.container
-						.row
-							.col-xs-3.col-sm-2.col-md-2.col-lg-2
-								.thumbnail
-									img.img-responsive.user-photo(src=profile.profilePic)
-								// /thumbnail
-							// /col-sm-1
-							.col-xs-9.col-sm-10.col-md-10.col-lg-10
-								.panel.panel-default
-									.panel-heading
-										a(href='/users/profile/' + profile._id)
-											strong #{profile.name}
-										span.text-muted= "  " + post.date
-										.pull-right
-											if user.id == profile.id
-												a.delete-post(href='#', delete-id=post._id, data-toggle='tooltip', data-placement='bottom', data-original-title='Picture')
-													i.fa.fa-trash-o(delete-id=post._id)
-									.panel-body  #{post.content}
-									.panel-footer
-										.right
-							
-												a(href='#' + post._id, data-toggle='tooltip', data-placement='top', style='padding: 3px' data-original-title='Picture')
-													i.fa.fa-comments
-										.left
-											a.add-like(href='#' + post._id, data-id=post._id, return-url='/users/profile/' + profile._id, data-toggle='tooltip', data-placement='top', style='padding: 3px' data-original-title='Picture')
-												if post.like_count
-													#{post.like_count}
-											
-												i.fa.fa-thumbs-up(data-id=post._id, return-url='/users/profile/' + profile._id)
-											a.add-dislike(href='#' + post._id,data-id=post._id, return-url='/users/profile/' + profile._id, data-toggle='tooltip', data-placement='top', style='padding: 3px' data-original-title='Picture')
-												if post.dislike_count
-													#{post.dislike_count}
+		.container
+			.row
+				.col-xs-3.col-sm-2.col-md-2.col-lg-2
+					.thumbnail
+						img.img-responsive.user-photo(src=profile.profilePic)
+					// /thumbnail
+				// /col-sm-1
+				.col-xs-9.col-sm-10.col-md-10.col-lg-10
+					.panel.panel-default
+						.panel-heading
+							a(href='/users/profile/' + profile._id)
+								strong #{profile.name}
+							span.text-muted= "  " + post.date
+							.pull-right
+								if user.id == profile.id
+									a.delete-post(href='#', delete-id=post._id, data-toggle='tooltip', data-placement='bottom', data-original-title='Picture')
+										i.fa.fa-trash-o(delete-id=post._id)
+						.panel-body  #{post.content}
+						.panel-footer
+							.right
+				
+									a(href='#' + post._id, data-toggle='tooltip', data-placement='top', style='padding: 3px' data-original-title='Picture')
+										i.fa.fa-comments
+							.left
+								if post.like_count
+									span.text-muted=post.like_count										
+								a.add-like(href='#' + post._id, data-id=post._id, return-url='/users/profile/' + profile._id, data-toggle='tooltip', data-placement='top', style='padding: 3px' data-original-title='Picture')
+									i.fa.fa-thumbs-up(data-id=post._id, return-url='/users/profile/' + profile._id)
+								if post.dislike_count
+									span.text-muted=post.dislike_count
+								a.add-dislike(href='#' + post._id,data-id=post._id, return-url='/users/profile/' + profile._id, data-toggle='tooltip', data-placement='top', style='padding: 3px' data-original-title='Picture')
+									i.fa.fa-thumbs-down(data-id=post._id, return-url='/users/profile/' + profile._id)
 
-												i.fa.fa-thumbs-down(data-id=post._id, return-url='/users/profile/' + profile._id)
-						br
+
+			br
 
 
 
