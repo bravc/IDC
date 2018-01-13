@@ -7,7 +7,10 @@
 * MongoDB & Mongoose
 * Pug Templating
 * Passport.js Authentication
-* BCrypt Hashing
+* Cloudinary API
+* JQuery
+* Mocha
+* Multer
 
 ### Version
 1.0.0
