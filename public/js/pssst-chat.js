@@ -53,7 +53,7 @@ $(document).ready(function(){
         $("#chat-window").scrollTop($("#chat-window")[0].scrollHeight);        feedback.html('<p><em>' + data + ' is typing...</em></p>');
         setTimeout(function(){
             feedback.html('');
-        }, 3000);
+        }, 8000);
     });
 });
 
