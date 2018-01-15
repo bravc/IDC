@@ -6,7 +6,8 @@ $(document).ready(function(){
     var message = $('#message'),
         btn = $('#send'),
         feedback = $('#feedback'),
-        output = $('#output');
+        output = $('#output'),
+        chatWindow = $('chat-window');
 
     //Grab user data from page 
     const userName = message.attr('user');
@@ -43,13 +44,13 @@ $(document).ready(function(){
 
     //When chat is recieved, update the dom
     socket.on('chat', function(data){
-        console.log(data);
         feedback.html('');
         output.append('<p><strong>' + data.sender + ': </strong>' + data.message + '</p>');
+        $("#chat-window").scrollTop($("#chat-window")[0].scrollHeight);        
     });
 
     socket.on('typing', function(data){
-        feedback.html('<p><em>' + data + ' is typing...</em></p>');
+        $("#chat-window").scrollTop($("#chat-window")[0].scrollHeight);        feedback.html('<p><em>' + data + ' is typing...</em></p>');
         setTimeout(function(){
             feedback.html('');
         }, 3000);
