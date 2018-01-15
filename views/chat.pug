@@ -4,9 +4,17 @@ extends layout
 block content 
 
     script(src="../public/js/pssst-chat.js")
-    link(rel='stylesheet', href='/public/css/style.css')
+    link(rel='stylesheet', href='/public/css/chat.css')
 
-    
+    #chat-box
+        h2 Pssst
+        #chat-window
+            #output
+            #feedback
+        input#message(type='text' placeholder='Type a message: ')
+        button#send Send
+
+
 
 
 

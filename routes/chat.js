@@ -9,7 +9,7 @@ router.get('/', function(req, res){
 
 
 io.on('connection', function(socket){
-    console.log('User connected' + socket);
+    console.log('User connected ' + socket.id);
 });
 
 module.exports = router;
