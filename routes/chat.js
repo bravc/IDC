@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const app = require('../app');
-const io = require('socket.io')(app);
+const io = require('../app').io;
 
 
 router.get('/', function(req, res){
-    res.render('pssst');
+    res.render('chat');
 });
 
 

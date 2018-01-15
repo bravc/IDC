@@ -10,6 +10,10 @@ const config = require('./config/database');
 const User = require('./models/users');
 const Post = require('./models/post');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+//Create app
+const app = express();
+
+
 
 const PORT = 8080;
 
@@ -34,8 +38,7 @@ db.on('error', function(err){
 });
 
 
-//Create app
-const app = express();
+
 
 
 
@@ -163,9 +166,14 @@ app.get('/auth/google/callback',
 
 
 //Start server
-app.listen(PORT, function(){
+const server = app.listen(PORT, function(){
 	console.log('Server started on port ' + PORT + "...");
 });
+
+
+//Start socket io 
+var io = module.exports.io = require('socket.io').listen(server);
+
 
 //Home Route
 app.get('/', function(req, res){
