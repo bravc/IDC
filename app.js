@@ -207,6 +207,14 @@ app.use('/users', users);
 let posts = require('./routes/posts')
 app.use('/posts', posts);
 
+//Allow routing through pssst
+let chat = require('./routes/chat');
+app.use('/chat', chat);
+
+module.exports = {
+	app: app
+};
+
 
 
 
