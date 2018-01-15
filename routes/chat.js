@@ -15,10 +15,12 @@ io.on('connection', function(socket){
 
 
     socket.on('chat', function(data){
+        console.log(data.message);
         io.sockets.emit('chat', data);
     });
 
     socket.on('typing', function(data){
+        console.log(data + " is typing..");
         socket.broadcast.emit('typing', data);
     });
 });

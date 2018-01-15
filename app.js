@@ -9,6 +9,7 @@ const passport = require('passport');
 const config = require('./config/database');
 const User = require('./models/users');
 const Post = require('./models/post');
+const cookieSession = require('cookie-session');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 //Create app
 const app = express();
@@ -88,7 +89,7 @@ app.use(expressValidator({
 	}
 }));
 
-// Express Session Middleware
+// // Express Session Middleware
 app.use(session({
 	secret: 'keyboard cat',
 	resave: true,
@@ -115,6 +116,7 @@ passport.deserializeUser(function(id, done) {
 		done(err, user);
 	});
 });
+
 
 app.use(flash());
 

@@ -1,38 +1,44 @@
 const socket = io.connect('http://localhost:8080');
 
-//define all DOM elements
-let message = $("#message"),
-    btn = $("#output"),
-    feedback = $("#feedback"),
-    output = $("#output");
+$(document).ready(function(){
 
-//Grab user data from page 
-const user = message.attr('data');
+    //define all DOM elements
+    var message = $('#message'),
+        btn = $('#send'),
+        feedback = $('#feedback'),
+        output = $('#output');
 
-
-//Show connection
-socket.on('connection', function(){
-    console.log('Connected...');
-});
-
-socket.on('chat', function(data){
-    feedback.innerHTML = '';
-    output.innerHTML += '<p><strong>' + data.sender + ': </strong>' + data.message + '</p>';
-});
-
-socket.on('typing', function(data){
-    feedback.innerHTML = '<p><em>' + data + ' is typing...</em></p>';
-});
+    //Grab user data from page 
+    const userName = message.attr('user');
 
 
-btn.addEventListener('click', function(){
-    socket.emit('chat', {
-        sender: user.name,
-        message: message.value
+    message.on('keypress', function(){
+        socket.emit('typing', userName);
     });
-    message.value = '';
+
+    btn.on('click', function(){
+        if(message.val() != ''){
+            socket.emit('chat', {
+                sender: userName,
+                message: message.val()
+            });
+            message.val('');
+        }
+    });
+
+    //Show connection
+    socket.on('connection', function(){
+        console.log('Connected...');
+    });
+
+    socket.on('chat', function(data){
+        console.log(data);
+        feedback.html('');
+        output.append('<p><strong>' + data.sender + ': </strong>' + data.message + '</p>');
+    });
+
+    socket.on('typing', function(data){
+        feedback.html('<p><em>' + data + ' is typing...</em></p>');
+    });
 });
 
-message.addEventListener('keypress', function(){
-    socket.emit('typing', user.name);
-});
