@@ -1,4 +1,4 @@
-const socket = io.connect('http://localhost:8080');
+const socket = io.connect('http://bravc.me');
 
 $(document).ready(function(){
 

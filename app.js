@@ -9,7 +9,6 @@ const passport = require('passport');
 const config = require('./config/database');
 const User = require('./models/users');
 const Post = require('./models/post');
-const cookieSession = require('cookie-session');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 //Create app
 const app = express();
