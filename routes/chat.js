@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const io = require('../app').io;
+let user = null;
 
 
 router.get('/', ensureAuthenticated, function(req, res){
+    user = req.user;
     res.render('chat');
 });
 
@@ -13,7 +15,11 @@ io.on('connection', function(socket){
 
 
     socket.on('chat', function(data){
-        console.log(data);
+        io.sockets.emit('chat', data);
+    });
+
+    socket.on('typing', function(data){
+        socket.broadcast.emit('typing', data);
     });
 });
 
