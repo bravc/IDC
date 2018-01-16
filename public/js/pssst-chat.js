@@ -1,4 +1,4 @@
-const socket = io.connect('http://bravc.me');
+const socket = io.connect('https://bravc.me');
 
 $(document).ready(function(){
 
