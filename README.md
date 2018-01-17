@@ -12,6 +12,9 @@
 * Mocha
 * Multer
 
+## Prereqs
+- Intall MongoDB
+
 ### Version
 1.0.0
 
